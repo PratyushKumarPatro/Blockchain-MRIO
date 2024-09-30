@@ -486,7 +486,6 @@ contract ProductionandConsumptionImpactAssessment{
         require(registrationContract.Focal_Company(msg.sender), "Sender not authorized");
         _;
     }
-
   event TCMCalculated(uint[20][20] matrixA);
   function calculateTCM(uint[20][20] memory matrixZ,uint[20][20] memory matrixX) public onlyFocal_Company 
     returns (uint[20][20] memory) 
