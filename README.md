@@ -523,43 +523,43 @@ contract ProductionandConsumptionImpactAssessment{
             
             emit DIMCalculated(MatrixE_int);
 
-    
-    return MatrixE_int;
-}
-   event TIMCalculated(uint[20][20] matrixT);
-
-function CalculateTIM(
-    uint[20][20] memory matrixE, 
-    uint[20][20] memory matrixL
-) 
-    public 
-    onlyFocal_Company 
-    returns (uint[20][20] memory) 
-{
-    uint[20][20] memory matrixT;
-    uint scalingFactor = 10**7;  
-
-    
-    for (uint i = 0; i < 20; i++) {
-        for (uint j = 0; j < 20; j++) {
-            matrixT[i][j] = 0;  
-
-            
-            for (uint k = 0; k < 20; k++) {
-                matrixT[i][j] += (matrixE[i][k] * matrixL[k][j]);
-            }
-
-            
-            matrixT[i][j] = matrixT[i][j] / scalingFactor;
-        }
+        
+        return MatrixE_int;
     }
-
+       event TIMCalculated(uint[20][20] matrixT);
     
-    emit TIMCalculated(matrixT);
-
+    function CalculateTIM(
+        uint[20][20] memory matrixE, 
+        uint[20][20] memory matrixL
+    ) 
+        public 
+        onlyFocal_Company 
+        returns (uint[20][20] memory) 
+    {
+        uint[20][20] memory matrixT;
+        uint scalingFactor = 10**7;  
     
-    return matrixT;
-}
+        
+        for (uint i = 0; i < 20; i++) {
+            for (uint j = 0; j < 20; j++) {
+                matrixT[i][j] = 0;  
+    
+                
+                for (uint k = 0; k < 20; k++) {
+                    matrixT[i][j] += (matrixE[i][k] * matrixL[k][j]);
+                }
+    
+                
+                matrixT[i][j] = matrixT[i][j] / scalingFactor;
+            }
+        }
+    
+        
+        emit TIMCalculated(matrixT);
+    
+        
+        return matrixT;
+    }
 
     event Production_basedImpactCalculated(uint[20][20] matrixX1);
     function calculateProduction_basedImpact(
