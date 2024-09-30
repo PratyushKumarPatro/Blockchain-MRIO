@@ -454,6 +454,7 @@ contract InputOutputIntermediateConsumption{
     }
 }
 contract ProductionandConsumptionImpactAssessment{
+
     InputOutputIntermediateConsumption public InputOutputIntermediateconsumptionContract;
     Registration public registrationContract;
      address payable public Focal_Company;
