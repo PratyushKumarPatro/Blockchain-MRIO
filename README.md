@@ -3,7 +3,6 @@ pragma solidity ^0.6.0;
 
 contract Registration{
     address payable public GRA;  // 0x20B38Da6a701c206820420dCfcB03FcB8720f206beddC4
-
     mapping(address=> bool) public Focal_Company; //0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
     mapping(address=>bool) public MRIO_Data_Aggregator; //0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
     mapping(address => bool) public Country_1_ONS; // 0x461EDc88d0A4607e30a7a0EF6ef10F8370Dc2e6F
