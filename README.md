@@ -404,17 +404,13 @@ contract InputOutputIntermediateConsumption{
     }
 
 
-  event FinalICMUpdated(uint[20][20] MatrixZ);
-
-function createFinalICM(uint[20][20] memory MatrixZ) public onlyMRIO_Data_Aggregator returns (uint[20][20] memory){  
-    
-    emit FinalICMUpdated(MatrixZ);
+     event FinalICMUpdated(uint[20][20] MatrixZ);
+     function createFinalICM(uint[20][20] memory MatrixZ) public onlyMRIO_Data_Aggregator returns (uint[20][20] memory){  
+     emit FinalICMUpdated(MatrixZ);
 
     
     return MatrixZ;
-}
-
-
+    }
 
     event  Om_ChmDemandUpdated(uint Y1);
     function Input_Om_ChmDemand(uint Y1) public onlySupplier_Om_Chm {
@@ -492,13 +488,7 @@ contract ProductionandConsumptionImpactAssessment{
     }
 
   event TCMCalculated(uint[20][20] matrixA);
-
-function calculateTCM(
-    uint[20][20] memory matrixZ, 
-    uint[20][20] memory matrixX
-) 
-    public 
-    onlyFocal_Company 
+  function calculateTCM(uint[20][20] memory matrixZ,uint[20][20] memory matrixX) public onlyFocal_Company 
     returns (uint[20][20] memory) 
 {
     uint[20][20] memory matrixA;
@@ -521,8 +511,7 @@ function calculateTCM(
 }
 
     event LIMUpdated(uint[20][20] matrixL);
-
-function inputLIM(uint[20][20] memory matrixL) 
+    function inputLIM(uint[20][20] memory matrixL) 
     public 
     onlyFocal_Company 
     returns (uint[20][20] memory) 
@@ -537,7 +526,6 @@ function inputLIM(uint[20][20] memory matrixL)
 
 
 event DIMCalculated(uint[20] matrixE_int);
-
 function calculateDIM(
     uint[20] memory matrixE, 
     uint[20] memory divisors
@@ -600,11 +588,10 @@ function CalculateTIM(
 }
 
     event Production_basedImpactCalculated(uint[20][20] matrixX1);
-
-function calculateProduction_basedImpact(
+    function calculateProduction_basedImpact(
     uint[20][20] memory matrixE, 
     uint[20][20] memory matrixY
-) 
+    ) 
     public 
     returns (uint[20][20] memory) 
 {
@@ -630,12 +617,11 @@ function calculateProduction_basedImpact(
 }
 
   event Consumption_basedImpactCalculated(uint[20][20] matrixX3);
-
-function calculateConsumption_basedImpact(
+  function calculateConsumption_basedImpact(
     uint[20][20] memory matrixE, 
     uint[20][20] memory matrixL, 
     uint[20][20] memory matrixY
-) 
+    ) 
     public 
     returns (uint[20][20] memory) 
 {
