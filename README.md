@@ -2,10 +2,6 @@
 pragma solidity ^0.6.0;
 
 contract Registration{
-
-// Global Regulatory Agency (GRA)
-// Office of National Statistics (ONS)
-// Rest of the World (RoW)
     address payable public GRA;  // 0x20B38Da6a701c206820420dCfcB03FcB8720f206beddC4
 
     mapping(address=> bool) public Focal_Company; //0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
