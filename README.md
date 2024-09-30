@@ -25,8 +25,6 @@ contract Registration{
     mapping(address=> bool) public Supplier_RoW_Meta; //0x6eCd876c6BCC749Eae80803eEFFdA155fEd2eabd
     
 
-
-
     modifier onlyGRA{
         require(msg.sender == GRA, "Sender not authorized.");
         _;
@@ -131,9 +129,6 @@ contract Registration{
         require(!MRIO_Data_Aggregator[A], "MRIO_Data_Aggregator exists already");
         MRIO_Data_Aggregator[A] =true;
     }
-
-
-    
     
     function isGRA(address g) public view returns(bool) {
         return (GRA == g);
@@ -379,8 +374,7 @@ contract InputOutputIntermediateConsumption{
     event Country_1_ICM_Updated(uint[20][4] matrixZ1);
     function UpdateCountry_1_ICM(uint[20][4] memory matrixZ1) public onlyCountry_1_ONS {
     emit Country_1_ICM_Updated(matrixZ1);
-
-}
+    }
 
     event Country_2_ICM_Updated(uint[20][4] matrixZ2);
     function UpdateCountry_2_ICM(uint[20][4] memory matrixZ2) public onlyCountry_2_ONS {
@@ -400,74 +394,66 @@ contract InputOutputIntermediateConsumption{
     event RoW_ICM_Updated(uint[20][4] matrixZ5);
     function UpdateRoW_ICM(uint[20][4] memory matrixZ5) public onlyRoW_ONS {
         emit RoW_ICM_Updated(matrixZ5);
-
     }
-
-
-     event FinalICMUpdated(uint[20][20] MatrixZ);
-     function createFinalICM(uint[20][20] memory MatrixZ) public onlyMRIO_Data_Aggregator returns (uint[20][20] memory){  
-     emit FinalICMUpdated(MatrixZ);
-
-    
-    return MatrixZ;
+    event FinalICMUpdated(uint[20][20] MatrixZ);
+    function createFinalICM(uint[20][20] memory MatrixZ) public onlyMRIO_Data_Aggregator returns (uint[20][20] memory){  
+        emit FinalICMUpdated(MatrixZ);
+        return MatrixZ;
     }
 
     event  Om_ChmDemandUpdated(uint Y1);
     function Input_Om_ChmDemand(uint Y1) public onlySupplier_Om_Chm {
-    emit Om_ChmDemandUpdated(Y1);
+        emit Om_ChmDemandUpdated(Y1);
     }
 
     event  Om_PolyDemandUpdated(uint Y2);
     function Input_Om_PolyDemand(uint Y2) public onlySupplier_Om_Poly {
-    emit Om_PolyDemandUpdated(Y2);
+        emit Om_PolyDemandUpdated(Y2);
     }
     event  Ku_PolyDemandUpdated(uint Y3);
     function Input_Ku_PolyDemand(uint Y3) public onlySupplier_Ku_Poly {
-    emit Ku_PolyDemandUpdated(Y3);
+        emit Ku_PolyDemandUpdated(Y3);
     }
     event  Ku_MetaDemandUpdated(uint Y4);
     function Input_Ku_MetaDemand(uint Y4) public onlySupplier_Ku_Meta {
-    emit Ku_MetaDemandUpdated(Y4);
+        emit Ku_MetaDemandUpdated(Y4);
     }
     event  Qa_PolyDemandUpdated(uint Y5);
     function Input_Qa_PolyDemand(uint Y5) public onlySupplier_Qa_Poly {
-    emit Qa_PolyDemandUpdated(Y5);
+        emit Qa_PolyDemandUpdated(Y5);
     }
     event  Qa_Meta_1DemandUpdated(uint Y6);
     function Input_Qa_Meta_1Demand(uint Y6) public onlySupplier_Qa_Meta_1 {
-    emit Qa_Meta_1DemandUpdated(Y6);
+        emit Qa_Meta_1DemandUpdated(Y6);
     }
     event  Qa_Meta_2DemandUpdated(uint Y7);
     function Input_Qa_Meta_2Demand(uint Y7) public onlySupplier_Qa_Meta_2 {
-    emit Qa_Meta_2DemandUpdated(Y7);
+        emit Qa_Meta_2DemandUpdated(Y7);
     }
-
     event  Ae_Chm_1DemandUpdated(uint Y8);
     function Input_Chm_1Demand(uint Y8) public onlySupplier_Ae_Chm_1 {
-    emit Ae_Chm_1DemandUpdated(Y8);
+        emit Ae_Chm_1DemandUpdated(Y8);
     }
 
     event  Ae_Chm_2DemandUpdated(uint Y9);
     function Input_Chm_2Demand(uint Y9) public onlySupplier_Ae_Chm_2 {
-    emit Ae_Chm_2DemandUpdated(Y9);
+        emit Ae_Chm_2DemandUpdated(Y9);
     }
 
     event  Ae_Chm_3DemandUpdated(uint Y10);
     function Input_Chm_3Demand(uint Y10) public onlySupplier_Ae_Chm_3 {
-    emit Ae_Chm_3DemandUpdated(Y10);
+        emit Ae_Chm_3DemandUpdated(Y10);
     }
 
     event  Ae_EleDemandUpdated(uint Y11);
     function Input_Ae_EleDemand(uint Y11) public onlySupplier_Ae_Ele {
-    emit Ae_EleDemandUpdated(Y11);
+        emit Ae_EleDemandUpdated(Y11);
     }
 
     event  RoW_MetaDemandUpdated(uint Y12);
     function Input_RoW_MetaDemand(uint Y12) public onlySupplier_RoW_Meta {
-    emit RoW_MetaDemandUpdated(Y12);
+        emit RoW_MetaDemandUpdated(Y12);
     }
-
-
 }
 contract ProductionandConsumptionImpactAssessment{
 
@@ -486,41 +472,30 @@ contract ProductionandConsumptionImpactAssessment{
         require(registrationContract.Focal_Company(msg.sender), "Sender not authorized");
         _;
     }
-  event TCMCalculated(uint[20][20] matrixA);
-  function calculateTCM(uint[20][20] memory matrixZ,uint[20][20] memory matrixX) public onlyFocal_Company 
-    returns (uint[20][20] memory) 
-{
-    uint[20][20] memory matrixA;
-    uint scalingFactor = 10000; 
+      event TCMCalculated(uint[20][20] matrixA);
+      function calculateTCM(uint[20][20] memory matrixZ,uint[20][20] memory matrixX) public onlyFocal_Company 
+        returns (uint[20][20] memory) {
+        uint[20][20] memory matrixA;
+        uint scalingFactor = 10000; 
 
-    for (uint i = 0; i < 20; i++) {
-        for (uint j = 0; j < 20; j++) {
-            require(matrixX[i][j] != 0, "Divisor cannot be zero");
-            
-            
-            matrixA[i][j] = (matrixZ[i][j] * scalingFactor) / matrixX[i][j];
-
+        for (uint i = 0; i < 20; i++) {
+            for (uint j = 0; j < 20; j++) {
+                require(matrixX[i][j] != 0, "Divisor cannot be zero");
+                    matrixA[i][j] = (matrixZ[i][j] * scalingFactor) / matrixX[i][j];
+                    }
+                }
+        emit TCMCalculated(matrixA);
+        return matrixA;
         }
-    }
 
-    
-    emit TCMCalculated(matrixA);
-
-    return matrixA;
-}
-
-    event LIMUpdated(uint[20][20] matrixL);
-    function inputLIM(uint[20][20] memory matrixL) 
-    public 
-    onlyFocal_Company 
-    returns (uint[20][20] memory) 
-{
-    
-    emit LIMUpdated(matrixL);
-    
-   
-    return matrixL;
-}
+        event LIMUpdated(uint[20][20] matrixL);
+        function inputLIM(uint[20][20] memory matrixL) 
+        public 
+        onlyFocal_Company 
+        returns (uint[20][20] memory) {       
+        emit LIMUpdated(matrixL);
+        return matrixL;
+        }
 
 
 
