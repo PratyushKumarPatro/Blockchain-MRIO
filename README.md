@@ -1,8 +1,6 @@
 # Blockchain-MRIO
 pragma solidity ^0.6.0;
-
 contract Registration{
-
     address payable public GRA;  // 0x20B38Da6a701c206820420dCfcB03FcB8720f206beddC4
     mapping(address=> bool) public Focal_Company; //0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
     mapping(address=>bool) public MRIO_Data_Aggregator; //0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
@@ -213,10 +211,7 @@ contract Registration{
     }
 
 }
-
 contract InputOutputIntermediateConsumption{
-
-     
      Registration public registrationContract;
      address payable public MRIO_Data_Aggregator;
      constructor(address registration) public {
@@ -456,10 +451,8 @@ contract InputOutputIntermediateConsumption{
     }
 }
 contract ProductionandConsumptionImpactAssessment{
-
     InputOutputIntermediateConsumption public InputOutputIntermediateconsumptionContract;
     Registration public registrationContract;
-
      address payable public Focal_Company;
      constructor(address registration) public {
         registrationContract = Registration(registration);
@@ -497,8 +490,6 @@ contract ProductionandConsumptionImpactAssessment{
         return matrixL;
         }
 
-
-
         event DIMCalculated(uint[20] matrixE_int);
         function calculateDIM(
             uint[20] memory matrixE, 
@@ -525,7 +516,7 @@ contract ProductionandConsumptionImpactAssessment{
 
         
         return MatrixE_int;
-    }
+        }
        event TIMCalculated(uint[20][20] matrixT);
        function CalculateTIM(
             uint[20][20] memory matrixE, 
@@ -553,12 +544,9 @@ contract ProductionandConsumptionImpactAssessment{
                 }
             }
         
-            
-            emit TIMCalculated(matrixT);
-    
-        
-        return matrixT;
-    }
+            emit TIMCalculated(matrixT); 
+            return matrixT;
+        }
 
     event Production_basedImpactCalculated(uint[20][20] matrixX1);
     function calculateProduction_basedImpact(
