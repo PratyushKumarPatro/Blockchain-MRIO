@@ -499,29 +499,29 @@ contract ProductionandConsumptionImpactAssessment{
 
 
 
-event DIMCalculated(uint[20] matrixE_int);
-function calculateDIM(
-    uint[20] memory matrixE, 
-    uint[20] memory divisors
-) 
-    public 
-    onlyFocal_Company 
-    returns (uint[20] memory) 
-{
-    
-    uint[20] memory MatrixE_int;
-    uint scalingFactor = 10**6;  
-
-    
-    for (uint i = 0; i < 20; i++) {
-        require(divisors[i] != 0, "Division by zero");  
+        event DIMCalculated(uint[20] matrixE_int);
+        function calculateDIM(
+            uint[20] memory matrixE, 
+            uint[20] memory divisors
+        ) 
+            public 
+            onlyFocal_Company 
+            returns (uint[20] memory) 
+        {
+            
+            uint[20] memory MatrixE_int;
+            uint scalingFactor = 10**6;  
         
+            
+            for (uint i = 0; i < 20; i++) {
+                require(divisors[i] != 0, "Division by zero");  
+                
+                
+                MatrixE_int[i] = (matrixE[i] * scalingFactor) / divisors[i];
+            }
         
-        MatrixE_int[i] = (matrixE[i] * scalingFactor) / divisors[i];
-    }
-
-    
-    emit DIMCalculated(MatrixE_int);
+            
+            emit DIMCalculated(MatrixE_int);
 
     
     return MatrixE_int;
