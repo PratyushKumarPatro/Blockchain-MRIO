@@ -527,35 +527,34 @@ contract ProductionandConsumptionImpactAssessment{
         return MatrixE_int;
     }
        event TIMCalculated(uint[20][20] matrixT);
-    
-    function CalculateTIM(
-        uint[20][20] memory matrixE, 
-        uint[20][20] memory matrixL
-    ) 
-        public 
-        onlyFocal_Company 
-        returns (uint[20][20] memory) 
-    {
-        uint[20][20] memory matrixT;
-        uint scalingFactor = 10**7;  
-    
+       function CalculateTIM(
+            uint[20][20] memory matrixE, 
+            uint[20][20] memory matrixL
+        ) 
+            public 
+            onlyFocal_Company 
+            returns (uint[20][20] memory) 
+        {
+            uint[20][20] memory matrixT;
+            uint scalingFactor = 10**7;  
         
-        for (uint i = 0; i < 20; i++) {
-            for (uint j = 0; j < 20; j++) {
-                matrixT[i][j] = 0;  
-    
-                
-                for (uint k = 0; k < 20; k++) {
-                    matrixT[i][j] += (matrixE[i][k] * matrixL[k][j]);
+            
+            for (uint i = 0; i < 20; i++) {
+                for (uint j = 0; j < 20; j++) {
+                    matrixT[i][j] = 0;  
+        
+                    
+                    for (uint k = 0; k < 20; k++) {
+                        matrixT[i][j] += (matrixE[i][k] * matrixL[k][j]);
+                    }
+        
+                    
+                    matrixT[i][j] = matrixT[i][j] / scalingFactor;
                 }
-    
-                
-                matrixT[i][j] = matrixT[i][j] / scalingFactor;
             }
-        }
-    
         
-        emit TIMCalculated(matrixT);
+            
+            emit TIMCalculated(matrixT);
     
         
         return matrixT;
@@ -568,7 +567,7 @@ contract ProductionandConsumptionImpactAssessment{
     ) 
     public 
     returns (uint[20][20] memory) 
-{
+    {
     uint[20][20] memory matrixX1;  
 
     
@@ -582,54 +581,50 @@ contract ProductionandConsumptionImpactAssessment{
             }
         }
     }
-
-    
     emit Production_basedImpactCalculated(matrixX1);
-
-    
     return matrixX1;
 }
 
-  event Consumption_basedImpactCalculated(uint[20][20] matrixX3);
-  function calculateConsumption_basedImpact(
-    uint[20][20] memory matrixE, 
-    uint[20][20] memory matrixL, 
-    uint[20][20] memory matrixY
-    ) 
-    public 
-    returns (uint[20][20] memory) 
-{
-    uint[20][20] memory matrixIntermediate; 
-    uint[20][20] memory matrixX3;            
-    uint scalingFactor = 10000000;           
-
-
-    for (uint i = 0; i < 20; i++) {
-        for (uint j = 0; j < 20; j++) {
-            matrixIntermediate[i][j] = 0;  
-            for (uint k = 0; k < 20; k++) {
-                matrixIntermediate[i][j] += matrixE[i][k] * matrixL[k][j];
-            }
-        }
-    }
-
-   
-    for (uint i = 0; i < 20; i++) {
-        for (uint j = 0; j < 20; j++) {
-            matrixX3[i][j] = 0;  
-            for (uint k = 0; k < 20; k++) {
-                matrixX3[i][j] += matrixIntermediate[i][k] * matrixY[k][j];
-            }
-
-            
-            matrixX3[i][j] = matrixX3[i][j] / scalingFactor;
-        }
-    }
-
-   
-    emit Consumption_basedImpactCalculated(matrixX3);
-
+      event Consumption_basedImpactCalculated(uint[20][20] matrixX3);
+      function calculateConsumption_basedImpact(
+        uint[20][20] memory matrixE, 
+        uint[20][20] memory matrixL, 
+        uint[20][20] memory matrixY
+        ) 
+        public 
+        returns (uint[20][20] memory) 
+    {
+        uint[20][20] memory matrixIntermediate; 
+        uint[20][20] memory matrixX3;            
+        uint scalingFactor = 10000000;           
     
-    return matrixX3;
+    
+        for (uint i = 0; i < 20; i++) {
+            for (uint j = 0; j < 20; j++) {
+                matrixIntermediate[i][j] = 0;  
+                for (uint k = 0; k < 20; k++) {
+                    matrixIntermediate[i][j] += matrixE[i][k] * matrixL[k][j];
+                }
+            }
+        }
+    
+       
+        for (uint i = 0; i < 20; i++) {
+            for (uint j = 0; j < 20; j++) {
+                matrixX3[i][j] = 0;  
+                for (uint k = 0; k < 20; k++) {
+                    matrixX3[i][j] += matrixIntermediate[i][k] * matrixY[k][j];
+                }
+    
+                
+                matrixX3[i][j] = matrixX3[i][j] / scalingFactor;
+            }
+        }
+    
+       
+        emit Consumption_basedImpactCalculated(matrixX3);
+    
+        
+        return matrixX3;
+        }
     }
-}
