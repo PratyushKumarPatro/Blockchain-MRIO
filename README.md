@@ -498,7 +498,6 @@ contract ProductionandConsumptionImpactAssessment{
 
   event TCMCalculated(uint[20][20] matrixA);
 
-// Function to create the TCM matrix with the added modifier
 function calculateTCM(
     uint[20][20] memory matrixZ, 
     uint[20][20] memory matrixX
