@@ -2,6 +2,7 @@
 pragma solidity ^0.6.0;
 
 contract Registration{
+
     address payable public GRA;  // 0x20B38Da6a701c206820420dCfcB03FcB8720f206beddC4
     mapping(address=> bool) public Focal_Company; //0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
     mapping(address=>bool) public MRIO_Data_Aggregator; //0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
@@ -19,7 +20,6 @@ contract Registration{
     mapping(address=> bool) public Supplier_Qa_Meta_2; //0x4B0897b0513fdC7C541B6d9D7E929C4e5364D2dB
     mapping(address=> bool) public Supplier_Ae_Chm_1; //0x583031D1113aD414F02576BD6afaBfb302140225
     mapping(address=> bool) public Supplier_Ae_Chm_2; //0xdD870fA1b7C4700F2BD7f44238821C26f7392148
-
     mapping(address=> bool) public Supplier_Ae_Chm_3; //0x55a1Dd406d51c6B6827c3940A63c03cb113F8Ad7
     mapping(address=> bool) public Supplier_Ae_Ele; //0x71213191Aa7Fca82f493Cb0f9cc6de6a7ef2Eb9E
     mapping(address=> bool) public Supplier_RoW_Meta; //0x6eCd876c6BCC749Eae80803eEFFdA155fEd2eabd
