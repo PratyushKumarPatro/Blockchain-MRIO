@@ -211,47 +211,43 @@ contract Registration {
     function Supplier_Ku_PolyExists(address P2) public view returns(bool) {
         return Supplier_Ku_Poly[P2];
     }
-
+    
     function Supplier_Ku_MetaExists(address M1) public view returns(bool) {
         return Supplier_Ku_Meta[M1];
     }
-
-    function Supplier_Qa_PolyExists(address P3) public view returns(bool) {
-
-        return Supplier_Qa_Poly[P3];
-
-    }
-
-
-
-    function Supplier_Qa_Meta_1Exists(address M1) public view returns(bool) {
-
-        return Supplier_Qa_Meta_1[M1];
-
-    }
-
     
-
-
-
+    function Supplier_Qa_PolyExists(address P3) public view returns(bool) {
+        return Supplier_Qa_Poly[P3];
+    }
+    
+    function Supplier_Qa_Meta_1Exists(address M1) public view returns(bool) {
+        return Supplier_Qa_Meta_1[M1];
+    } 
+    
     function Supplier_Qa_Meta_2Exists(address M2) public view returns(bool) {
         return Supplier_Qa_Meta_2[M2];
     }
+    
     function Supplier_Ae_Chm_1Exists(address C1) public view returns(bool) {
         return Supplier_Ae_Chm_1[C1];
     }
+    
     function Supplier_Ae_Chm_2Exists(address C2) public view returns(bool) {
         return Supplier_Ae_Chm_2[C2];
     }
+    
     function Supplier_Ae_Chm_3Exists(address C3) public view returns(bool) {
         return Supplier_Ae_Chm_3[C3];
     }
+    
     function Supplier_Ae_EleExists(address E1) public view returns(bool) {
         return Supplier_Ae_Ele[E1];
     }
+    
     function Supplier_RoW_MetaExists(address M3) public view returns(bool) {
         return Supplier_RoW_Meta[M3];
     }
+    
     function Focal_CompanyExists(address F) public view returns(bool) {
         return Focal_Company[F];
     }
@@ -270,301 +266,152 @@ contract Registration {
 contract InputOutputIntermediateConsumption {
 
     Registration public immutable registrationContract;
-
-
-
     constructor(address registrationAddress) {
-
         registrationContract = Registration(registrationAddress);
-
     }
-
-
-
+    
     modifier onlyCountry_1_ONS() {
-
         require(
-
             registrationContract.Country_1_ONSExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlyCountry_2_ONS() {
-
         require(
-
             registrationContract.Country_2_ONSExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlyCountry_3_ONS() {
-
         require(
-
             registrationContract.Country_3_ONSExists(msg.sender),
-
             "Sender not authorized"
-
         );
+       _;
+   }
 
-        _;
-
-    }
-
-
-
-    modifier onlyCountry_4_ONS() {
-
+   modifier onlyCountry_4_ONS() {
         require(
-
             registrationContract.Country_4_ONSExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlyRoW_ONS() {
-
         require(
-
             registrationContract.RoW_ONSExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlyMRIO_Data_Aggregator() {
-
         require(
-
             registrationContract.MRIO_Data_AggregatorExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlyFocalCompany() {
-
         require(
-
             registrationContract.Focal_CompanyExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Om_Chm() {
-
         require(
-
             registrationContract.Supplier_Om_ChmExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Om_Poly() {
-
         require(
-
             registrationContract.Supplier_Om_PolyExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Ku_Poly() {
-
         require(
-
             registrationContract.Supplier_Ku_PolyExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Ku_Meta() {
-
         require(
-
             registrationContract.Supplier_Ku_MetaExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Qa_Poly() {
-
         require(
-
             registrationContract.Supplier_Qa_PolyExists(msg.sender),
-
             "Sender not authorized"
-
-        );
-
+       );
         _;
-
     }
-
-
 
     modifier onlySupplier_Qa_Meta_1() {
-
         require(
-
             registrationContract.Supplier_Qa_Meta_1Exists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Qa_Meta_2() {
-
         require(
-
             registrationContract.Supplier_Qa_Meta_2Exists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Ae_Chm_1() {
-
         require(
-
             registrationContract.Supplier_Ae_Chm_1Exists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Ae_Chm_2() {
-
         require(
-
             registrationContract.Supplier_Ae_Chm_2Exists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
-
-
 
     modifier onlySupplier_Ae_Chm_3() {
-
         require(
-
             registrationContract.Supplier_Ae_Chm_3Exists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
 
-
-
     modifier onlySupplier_Ae_Ele() {
-
         require(
-
             registrationContract.Supplier_Ae_EleExists(msg.sender),
-
             "Sender not authorized"
-
         );
-
         _;
-
     }
 
 
