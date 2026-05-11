@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.20;
+
 contract Registration { 
+
     address payable public immutable GRA;  // 0x20B38Da6a701c206820420dCfcB03FcB8720f206beddC4
     mapping(address=> bool) public Focal_Company; //0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
     mapping(address=>bool) public MRIO_Data_Aggregator; //0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
