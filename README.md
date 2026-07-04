@@ -2,6 +2,9 @@
 
 pragma solidity ^0.8.20;
 
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
+
 contract Registration { 
 
     address payable public immutable GRA;  // 0x20B38Da6a701c206820420dCfcB03FcB8720f206beddC4
@@ -17,6 +20,7 @@ contract Registration {
     mapping(address=> bool) public Supplier_Ku_Poly; //0x1aE0EA34a72D944a8C7603FfB3eC30a6669E454C
     mapping(address=> bool) public Supplier_Ku_Meta; //0x0A098Eda01Ce92ff4A4CCb7A4fFFb5A43EBC70DC
     mapping(address=> bool) public Supplier_Qa_Poly; //0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c
+
     mapping(address=> bool) public Supplier_Qa_Meta_1; //0x14723A09ACff6D2A60DcdF7aA4AFf308FDDC160C
     mapping(address=> bool) public Supplier_Qa_Meta_2; //0x4B0897b0513fdC7C541B6d9D7E929C4e5364D2dB
     mapping(address=> bool) public Supplier_Ae_Chm_1; //0x583031D1113aD414F02576BD6afaBfb302140225
@@ -265,6 +269,7 @@ contract Registration {
 
 contract InputOutputIntermediateConsumption {
 
+    
     Registration public immutable registrationContract;
     constructor(address registrationAddress) {
         registrationContract = Registration(registrationAddress);
@@ -632,8 +637,9 @@ contract ProductionandConsumptionImpactAssessment {
 
     Registration public immutable registrationContract;
 
+    using Strings for uint256;
     uint256 public constant N = 20;
-    uint256 public constant SCALE = 1e18;
+    uint256 public constant SCALE = 1e5;
 
     address payable public immutable Focal_Company;
 
@@ -644,8 +650,10 @@ contract ProductionandConsumptionImpactAssessment {
     event LIMUpdated(uint256[20][20] matrixL);
     event DIMCalculated(uint256[20] matrixE_int);
     event TIMCalculated(uint256[20][20] matrixT);
-    event Production_basedImpactCalculated(uint256[20][20] matrixX1);
-    event Consumption_basedImpactCalculated(uint256[20][20] matrixX3);
+    //event Production_basedImpactCalculated(uint256[20][20] matrixX1);
+    event Production_basedImpactCalculated(string[20][20] matrixX1Formatted);
+    //event Consumption_basedImpactCalculated(uint256[20][20] matrixX3);
+    event Consumption_basedImpactCalculated(string[20][20] matrixX4Formatted);
 
     constructor(address registration) {
         registrationContract = Registration(registration);
@@ -895,27 +903,41 @@ contract ProductionandConsumptionImpactAssessment {
         return matrixT;
     }
 
+
     function calculateProduction_basedImpact(
-        uint256[20][20] memory matrixE,
-        uint256[20][20] memory matrixY
-    )
-        public
-        returns (uint256[20][20] memory matrixX1)
-    {
-        matrixX1 = _zeroMatrixNew();
+    uint256[20][20] memory matrixE,
+    uint256[20][20] memory matrixY
+)
+    public
+    returns (uint256[20][20] memory matrixX1)
+{
+    matrixX1 = _zeroMatrixNew();
 
-        for (uint256 i = 0; i < 20; i++) {
-            for (uint256 j = 0; j < 20; j++) {
-                uint256 sum = 0;
-                for (uint256 k = 0; k < 20; k++) {
-                    sum += matrixE[i][k] * matrixY[k][j];
-                }
-                matrixX1[i][j] = sum;
+    string[20][20] memory matrixX1Formatted;
+
+    for (uint256 i = 0; i < 20; i++) {
+        for (uint256 j = 0; j < 20; j++) {
+            uint256 sum = 0;
+
+            for (uint256 k = 0; k < 20; k++) {
+                sum += matrixE[i][k] * matrixY[k][j];
             }
-        }
 
-        emit Production_basedImpactCalculated(matrixX1);
-        return matrixX1;
+            // Keep scaled numeric value for computations
+            matrixX1[i][j] = sum;
+
+            // Human-readable descaled decimal value for Logs
+            matrixX1Formatted[i][j] = _formatScaled(
+                matrixX1[i][j],
+                SCALE,
+                6
+            );
+        }
+    }
+
+    emit Production_basedImpactCalculated(matrixX1Formatted);
+
+    return matrixX1;
     }
 
     function calculateConsumption_basedImpact(
@@ -926,32 +948,115 @@ contract ProductionandConsumptionImpactAssessment {
         public
         returns (uint256[20][20] memory matrixX3)
     {
-        uint256[20][20] memory matrixIntermediate = _zeroMatrixNew();   // ← Bulletproof fix
+        uint256[20][20] memory matrixIntermediate = _zeroMatrixNew();
+        string[20][20] memory matrixX4Formatted;
+
         matrixX3 = _zeroMatrixNew();
 
         // Intermediate = E * L
+        // Since E and L are scaled:
+        // matrixIntermediate is scaled by SCALE^2
         for (uint256 i = 0; i < 20; i++) {
             for (uint256 j = 0; j < 20; j++) {
                 uint256 sum1 = 0;
+
                 for (uint256 k = 0; k < 20; k++) {
                     sum1 += matrixE[i][k] * matrixL[k][j];
                 }
+
                 matrixIntermediate[i][j] = sum1;
             }
         }
 
         // X3 = Intermediate * Y / SCALE
+        // matrixX3 remains scaled once.
+        // Final human-readable value = matrixX3 / SCALE,
+        // but formatted as string to preserve decimals.
         for (uint256 i = 0; i < 20; i++) {
             for (uint256 j = 0; j < 20; j++) {
                 uint256 sum2 = 0;
+
                 for (uint256 k = 0; k < 20; k++) {
                     sum2 += matrixIntermediate[i][k] * matrixY[k][j];
                 }
+
+                // Keep this value scaled once for precision.
                 matrixX3[i][j] = sum2 / SCALE;
+
+                // Format final descaled value as decimal string.
+                // Example: "12.345678"
+                matrixX4Formatted[i][j] = _formatScaled(
+                    matrixX3[i][j],
+                    SCALE,
+                    6
+                );
             }
         }
 
-        emit Consumption_basedImpactCalculated(matrixX3);
+        emit Consumption_basedImpactCalculated(matrixX4Formatted);
+
         return matrixX3;
     }
+
+    function _formatScaled(
+        uint256 value,
+        uint256 scale,
+        uint8 decimalsToShow
+    )
+        internal
+        pure
+        returns (string memory)
+    {
+        require(scale > 0, "Scale cannot be zero");
+        require(decimalsToShow <= 18, "Too many decimals");
+
+        uint256 wholePart = value / scale;
+
+        if (decimalsToShow == 0) {
+            return wholePart.toString();
+        }
+
+        uint256 displayScale = 10 ** uint256(decimalsToShow);
+
+        uint256 fractionalPart = Math.mulDiv(
+            value % scale,
+            displayScale,
+            scale
+        );
+
+        return string.concat(
+            wholePart.toString(),
+            ".",
+            _leftPadZeros(fractionalPart.toString(), decimalsToShow)
+        );
+    }
+
+    function _leftPadZeros(
+        string memory input,
+        uint256 targetLength
+    )
+        internal
+        pure
+        returns (string memory)
+    {
+        bytes memory inputBytes = bytes(input);
+
+        if (inputBytes.length >= targetLength) {
+            return input;
+        }
+
+        bytes memory result = new bytes(targetLength);
+        uint256 zerosToAdd = targetLength - inputBytes.length;
+
+        for (uint256 i = 0; i < zerosToAdd; i++) {
+            result[i] = bytes1("0");
+        }
+
+        for (uint256 i = 0; i < inputBytes.length; i++) {
+            result[zerosToAdd + i] = inputBytes[i];
+        }
+
+        return string(result);
+    }
+
 }
